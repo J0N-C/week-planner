@@ -15,27 +15,45 @@
   <main>
     <div id="add-entry" class="hidden">
       <div class="entry-box">
-      <h2>Add Entry</h2>
-      <select>
-        <option value="">Day of the Week</option>
-        <option value="monday">Monday</option>
-        <option value="tuesday">Tuesday</option>
-        <option value="wednesday">Wednesday</option>
-        <option value="thursday">Thursday</option>
-        <option value="friday">Friday</option>
-        <option value="saturday">Saturday</option>
-        <option value="sunday">Sunday</option>
-      </select>
-      <select>
-        <option value="">Time</option>
-        <option value="12">12:00</option>
-      </select>
-      <div class="row textarea-cont">
-        <textarea>Description</textarea>
-      </div>
-      <div class="row">
-        <button id="save-entry">Submit</button>
-      </div>
+        <h2>Add Entry</h2>
+        <form id="entry-form">
+          <select>
+            <option value="">Day of the Week</option>
+            <option value="monday">Monday</option>
+            <option value="tuesday">Tuesday</option>
+            <option value="wednesday">Wednesday</option>
+            <option value="thursday">Thursday</option>
+            <option value="friday">Friday</option>
+            <option value="saturday">Saturday</option>
+            <option value="sunday">Sunday</option>
+          </select>
+          <select>
+            <option value="">Time</option>
+            <option value="12">12:00</option>
+            <option value="1">1:00</option>
+            <option value="2">2:00</option>
+            <option value="3">3:00</option>
+            <option value="4">4:00</option>
+            <option value="5">5:00</option>
+            <option value="6">6:00</option>
+            <option value="7">7:00</option>
+            <option value="8">8:00</option>
+            <option value="9">9:00</option>
+            <option value="10">10:00</option>
+            <option value="11">11:00</option>
+          </select>
+          <select>
+            <option value="">AM/PM</option>
+            <option value="am">AM</option>
+            <option value="pm">PM</option>
+          </select>
+          <div class="row textarea-cont">
+            <textarea>Description</textarea>
+          </div>
+          <div class="row">
+            <button id="save-entry" type="submit">Submit</button>
+          </div>
+        </form>
       </div>
     </div>
     <div>
