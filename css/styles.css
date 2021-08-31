@@ -1,0 +1,42 @@
+/* current font Klee One font-family: 'Klee One', cursive; 400 600 */
+
+* {
+  font-family: 'Klee One', sans-serif;
+}
+
+h1,
+h2 {
+  text-align: center;
+}
+
+h2 {
+  margin: 0;
+  font-size: 200%;
+  font-weight: 600;
+}
+
+textarea {
+  width: 100%;
+  height: 8rem;
+}
+
+.entry-box {
+  width: 50%;
+  border: 1px solid black;
+  border-radius: 2px;
+  background-color: white;
+  padding: 1rem 2rem 2rem;
+}
+
+.entry-box select {
+  margin: 0 1rem  1rem 0;
+}
+
+.textarea-cont {
+  padding: 1rem 0;
+}
+
+.entry-box button {
+  margin-right: 0;
+  margin-left: auto;
+}
