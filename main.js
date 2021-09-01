@@ -8,7 +8,7 @@ const weeklyEntries = {
   sunday: {}
 };
 
-/* sample entry: {monday: {morning: true, 10: do work}} */
+/* sample entry: {monday: {10-am: do work, 10-pm: no work}} */
 
 const $addEntryButton = document.querySelector('#add-entry-button');
 const $addEntryBox = document.querySelector('#add-entry');
@@ -24,9 +24,7 @@ $entryForm.addEventListener('submit', function (event) {
   event.preventDefault();
   const dayOfW = $entryForm.day.value;
   const hour = $entryForm.hour.value;
-  const ampm = $entryForm.morning.value;
-  const time = `${hour}-${ampm}`;
-  weeklyEntries[dayOfW][time] = $entryForm.entry.value;
+  weeklyEntries[dayOfW][hour] = $entryForm.entry.value;
   $addEntryBox.className = 'hidden';
 });
 
