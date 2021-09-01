@@ -4,9 +4,72 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Week Planner</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <main>
+    <div id="add-entry" class="hidden">
+      <div class="entry-box">
+        <h2>Add Entry</h2>
+        <form id="entry-form">
+          <select required name="day">
+            <option value="">Day of the Week</option>
+            <option value="monday">Monday</option>
+            <option value="tuesday">Tuesday</option>
+            <option value="wednesday">Wednesday</option>
+            <option value="thursday">Thursday</option>
+            <option value="friday">Friday</option>
+            <option value="saturday">Saturday</option>
+            <option value="sunday">Sunday</option>
+          </select>
+          <select required name="hour">
+            <option value="">Time</option>
+            <option value="12-am">12:00 AM</option>
+            <option value="1-am">1:00 AM</option>
+            <option value="2-am">2:00 AM</option>
+            <option value="3-am">3:00 AM</option>
+            <option value="4-am">4:00 AM</option>
+            <option value="5-am">5:00 AM</option>
+            <option value="6-am">6:00 AM</option>
+            <option value="7-am">7:00 AM</option>
+            <option value="8-am">8:00 AM</option>
+            <option value="9-am">9:00 AM</option>
+            <option value="10-am">10:00 AM</option>
+            <option value="11-am">11:00 AM</option>
+            <option value="12-pm">12:00 PM</option>
+            <option value="1-pm">1:00 PM</option>
+            <option value="2-pm">2:00 PM</option>
+            <option value="3-pm">3:00 PM</option>
+            <option value="4-pm">4:00 PM</option>
+            <option value="5-pm">5:00 PM</option>
+            <option value="6-pm">6:00 PM</option>
+            <option value="7-pm">7:00 PM</option>
+            <option value="8-pm">8:00 PM</option>
+            <option value="9-pm">9:00 PM</option>
+            <option value="10-pm">10:00 PM</option>
+            <option value="11-pm">11:00 PM</option>
+          </select>
+          <div class="row textarea-cont">
+            <textarea required name="entry" placeholder="Description"></textarea>
+          </div>
+          <div class="row">
+            <button form="entry-form" id="save-entry" name="save" type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div>
+      <h1>Weekly Planner</h1>
+    </div>
+    <div class="row">
+      <button id="add-entry-button">Add Entry</button>
+    </div>
+  </main>
   <script src="main.js"></script>
 </body>
 </html>
