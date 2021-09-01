@@ -13,6 +13,66 @@
 </head>
 <body>
   <main>
+    <div>
+      <h1>Weekly Planner</h1>
+    </div>
+
+    <div id="days" class="row space-ev">
+      <button>Sunday</button>
+      <button>Monday</button>
+      <button>Tuesday</button>
+      <button>Wednesday</button>
+      <button>Thursday</button>
+      <button>Friday</button>
+      <button>Saturday</button>
+    </div>
+
+    <div class="row">
+      <button id="add-entry-button">Add Entry</button>
+    </div>
+
+    <div id="schedule">
+      <h3>Scheduled Events for Monday</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              Time
+            </th>
+            <th>
+              Description
+            </th>
+          </tr>
+        </thead>
+        <tbody id="schedule-body" class="monday">
+          <tr>
+            <td>
+              Test time 10:00 AM
+            </td>
+            <td>
+              Test entry do work
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Test time 11:00 AM
+            </td>
+            <td>
+              Test entry do work
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Test time 12:00 PM
+            </td>
+            <td>
+              Test entry do work
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div id="add-entry" class="hidden">
       <div class="entry-box">
         <h2>Add Entry</h2>
@@ -62,12 +122,6 @@
           </div>
         </form>
       </div>
-    </div>
-    <div>
-      <h1>Weekly Planner</h1>
-    </div>
-    <div class="row">
-      <button id="add-entry-button">Add Entry</button>
     </div>
   </main>
   <script src="main.js"></script>

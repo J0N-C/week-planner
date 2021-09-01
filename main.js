@@ -17,7 +17,6 @@ const $entryForm = document.querySelector('#entry-form');
 $addEntryButton.addEventListener('click', function (event) {
   $addEntryBox.className = '';
   $entryForm.reset();
-
 });
 
 $entryForm.addEventListener('submit', function (event) {
@@ -27,7 +26,7 @@ $entryForm.addEventListener('submit', function (event) {
   weeklyEntries[dayOfW][hour] = $entryForm.entry.value;
   $addEntryBox.className = 'hidden';
 });
-
+/* Object.keys(objectName) to get array of keys of an object. */
 /* function submitForm(event) {
   let currentEntry = null;
   event.preventDefault();
