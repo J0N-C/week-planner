@@ -40,23 +40,8 @@ $entryForm.addEventListener('submit', function (event) {
   const hour = $entryForm.hour.value;
   weeklyEntries[dayOfW][hour] = $entryForm.entry.value;
   $addEntryBox.className = 'hidden';
+  populateSchedule(dayOfW);
 });
-/* Object.keys(objectName) to get array of keys of an object. */
-/* function submitForm(event) {
-  let currentEntry = null;
-  event.preventDefault();
-  if ($form.getAttribute('data-view') === 'entry-form') {
-    const filledForm = {};
-    filledForm.entryID = data.nextEntryId;
-    filledForm.title = $form.title.value;
-    filledForm.photourl = $form.photo.value;
-    filledForm.notes = $form.notes.value;
-    data.nextEntryId++;
-    $form.reset();
-    data.entries.push(filledForm);
-    document.querySelector('#photo').setAttribute('src', 'images/placeholder-image-square.jpg');
-    showEntries();
-  } */
 
 $scheduleDay.addEventListener('click', function (event) {
   if (event.target.nodeName !== 'BUTTON') return;
@@ -76,6 +61,10 @@ function blankSchedule(num) {
   }
 }
 
+/*
+Object.keys(objectName) to get array of keys of an object.
+Object.tentries(objectName) to get array of key-value pairs
+*/
 function populateSchedule(day) {
   while ($scheduleBody.firstChild) {
     $scheduleBody.removeChild($scheduleBody.firstChild);
@@ -105,7 +94,7 @@ function populateSchedule(day) {
     dataNodes[1].textContent = fullSchedule[i][1];
   }
 }
-/* function for sorting an array of entry times keeping 12 as first entry */
+/* function for sorting an array of entry times keeping 12:00 as first entry */
 function compareTime(timeArr) {
   return timeArr.sort((a, b) => {
     let intA = parseInt(a[0]);
@@ -120,8 +109,7 @@ function compareTime(timeArr) {
   });
 }
 
-/* Loop through entering all entries set up html elements. minimum 8 rows if 8 or less entries, else continue.
-Set up a way to swap views for each day schedule. NOT className? */
+/* example table setup reference */
 /* <tbody id="schedule-body" class="monday">
           <tr>
             <td>
