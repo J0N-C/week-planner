@@ -45,6 +45,7 @@ th {
 
 th,
 td {
+  height: 2rem;
   border-right: 1px solid black;
   border-left: 1px solid black;
 }
