@@ -1,3 +1,7 @@
+/* data and localdata */
+/* sample entry: {monday: {10:00 AM: 'do work', 10:00 PM: 'no work'}} */
+/* will have to use bracket notation to pull values:
+weeklyEntries.monday['10:00 AM'] === 'do work' */
 var weeklyEntries = {
   monday: {},
   tuesday: {},
@@ -18,8 +22,6 @@ if (previousEntries !== null) {
   weeklyEntries = JSON.parse(previousEntries);
 }
 
-/* sample entry: {monday: {10-am: do work, 10-pm: no work}} */
-
 const $addEntryButton = document.querySelector('#add-entry-button');
 const $addEntryBox = document.querySelector('#add-entry');
 const $entryForm = document.querySelector('#entry-form');
@@ -27,13 +29,16 @@ const $scheduleDay = document.querySelector('#days');
 const $scheduleBody = document.querySelector('#schedule-body');
 const $changeDay = document.querySelector('#change-day');
 
+/* default schedule to monday */
 populateSchedule('monday');
 
+/* reveal new entry popup */
 $addEntryButton.addEventListener('click', function (event) {
   $addEntryBox.className = '';
   $entryForm.reset();
 });
 
+/* submit new entry and refresh schedule for day entered */
 $entryForm.addEventListener('submit', function (event) {
   event.preventDefault();
   const dayOfW = $entryForm.day.value;
@@ -43,6 +48,7 @@ $entryForm.addEventListener('submit', function (event) {
   populateSchedule(dayOfW);
 });
 
+/* change schedule day */
 $scheduleDay.addEventListener('click', function (event) {
   if (event.target.nodeName !== 'BUTTON') return;
   const day = event.target.textContent;
@@ -50,6 +56,7 @@ $scheduleDay.addEventListener('click', function (event) {
   $changeDay.textContent = day;
 });
 
+/* setup a blank table with (num) rows */
 function blankSchedule(num) {
   for (let i = 0; i < num; i++) {
     const newRow = document.createElement('tr');
@@ -61,6 +68,7 @@ function blankSchedule(num) {
   }
 }
 
+/* populate table with entries */
 /*
 Object.keys(objectName) to get array of keys of an object.
 Object.tentries(objectName) to get array of key-value pairs
@@ -94,7 +102,18 @@ function populateSchedule(day) {
     dataNodes[1].textContent = fullSchedule[i][1];
   }
 }
-/* function for sorting an array of entry times keeping 12:00 as first entry */
+
+/* function for sorting an array of entry times keeping 12:00 as first entry
+sort format from MDN https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort:
+
+let numbers = [4, 2, 5, 1, 3];
+numbers.sort((a, b) => a - b);
+console.log(numbers);
+returns [1, 2, 3, 4, 5]
+
+assume timeArr format array of an array of key-value pairs:
+[[12:00 AM, description], [1:00 AM, description], [2:00 AM, description]]
+*/
 function compareTime(timeArr) {
   return timeArr.sort((a, b) => {
     let intA = parseInt(a[0]);
