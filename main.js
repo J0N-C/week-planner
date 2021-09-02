@@ -25,6 +25,7 @@ const $addEntryBox = document.querySelector('#add-entry');
 const $entryForm = document.querySelector('#entry-form');
 const $scheduleDay = document.querySelector('#days');
 const $scheduleBody = document.querySelector('#schedule-body');
+const $changeDay = document.querySelector('#change-day');
 
 populateSchedule('monday');
 
@@ -60,7 +61,8 @@ $entryForm.addEventListener('submit', function (event) {
 $scheduleDay.addEventListener('click', function (event) {
   if (event.target.nodeName !== 'BUTTON') return;
   const day = event.target.textContent;
-  $scheduleBody.className = day.toLowerCase();
+  populateSchedule(day.toLowerCase());
+  $changeDay.textContent = day;
 });
 
 function blankSchedule(num) {
