@@ -28,6 +28,7 @@ const $entryForm = document.querySelector('#entry-form');
 const $scheduleDay = document.querySelector('#days');
 const $scheduleBody = document.querySelector('#schedule-body');
 const $changeDay = document.querySelector('#change-day');
+const $deleteEntryBox = document.querySelector('#delete-entry-box');
 
 /* default schedule to monday */
 populateSchedule('monday');
@@ -39,10 +40,13 @@ $addEntryButton.addEventListener('click', function (event) {
   $entryForm.reset();
 });
 
-/* close popup for new entry if click outside box */
-$addEntryBox.addEventListener('mousedown', function (event) {
+/* close popup for new or delete entry, if click outside box */
+window.addEventListener('mousedown', function (event) {
   if (event.target.id === 'add-entry') {
     $addEntryBox.className = 'hidden';
+  }
+  if (event.target.id === 'delete-entry-box') {
+    $deleteEntryBox.className = 'hidden';
   }
 });
 
@@ -164,6 +168,9 @@ $scheduleBody.addEventListener('click', function (event) {
     $entryForm.day.value = $scheduleBody.getAttribute('data-day');
     $entryForm.hour.value = childData[0].textContent;
     $entryForm.entry.value = childData[1].textContent;
+  }
+  if (event.target.classList.contains('delete-button')) {
+    $deleteEntryBox.className = '';
   }
 });
 
