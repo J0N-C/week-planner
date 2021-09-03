@@ -134,7 +134,7 @@ function compareTime(timeArr) {
 function addEditButton(node) {
   const editButton = document.createElement('button');
   editButton.textContent = 'Update';
-  editButton.className = 'button, edit-button';
+  editButton.className = 'button edit-button center-buttons';
   node.appendChild(editButton);
 }
 
