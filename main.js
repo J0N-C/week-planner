@@ -1,4 +1,8 @@
-const weeklyEntries = {
+/* data and localdata */
+/* sample entry: {monday: {10:00 AM: 'do work', 10:00 PM: 'no work'}} */
+/* will have to use bracket notation to pull values:
+weeklyEntries.monday['10:00 AM'] === 'do work' */
+var weeklyEntries = {
   monday: {},
   tuesday: {},
   wednesday: {},
@@ -8,38 +12,146 @@ const weeklyEntries = {
   sunday: {}
 };
 
-/* sample entry: {monday: {10-am: do work, 10-pm: no work}} */
+window.addEventListener('beforeunload', function (event) {
+  var weeklyEntriesJSON = JSON.stringify(weeklyEntries);
+  localStorage.setItem('weekly-data', weeklyEntriesJSON);
+});
+
+var previousEntries = localStorage.getItem('weekly-data');
+if (previousEntries !== null) {
+  weeklyEntries = JSON.parse(previousEntries);
+}
 
 const $addEntryButton = document.querySelector('#add-entry-button');
 const $addEntryBox = document.querySelector('#add-entry');
 const $entryForm = document.querySelector('#entry-form');
+const $scheduleDay = document.querySelector('#days');
+const $scheduleBody = document.querySelector('#schedule-body');
+const $changeDay = document.querySelector('#change-day');
 
+/* default schedule to monday */
+populateSchedule('monday');
+
+/* reveal new entry popup */
 $addEntryButton.addEventListener('click', function (event) {
   $addEntryBox.className = '';
   $entryForm.reset();
-
 });
 
+/* submit new entry and refresh schedule for day entered */
 $entryForm.addEventListener('submit', function (event) {
   event.preventDefault();
   const dayOfW = $entryForm.day.value;
   const hour = $entryForm.hour.value;
   weeklyEntries[dayOfW][hour] = $entryForm.entry.value;
   $addEntryBox.className = 'hidden';
+  populateSchedule(dayOfW);
 });
 
-/* function submitForm(event) {
-  let currentEntry = null;
-  event.preventDefault();
-  if ($form.getAttribute('data-view') === 'entry-form') {
-    const filledForm = {};
-    filledForm.entryID = data.nextEntryId;
-    filledForm.title = $form.title.value;
-    filledForm.photourl = $form.photo.value;
-    filledForm.notes = $form.notes.value;
-    data.nextEntryId++;
-    $form.reset();
-    data.entries.push(filledForm);
-    document.querySelector('#photo').setAttribute('src', 'images/placeholder-image-square.jpg');
-    showEntries();
-  } */
+/* change schedule day */
+$scheduleDay.addEventListener('click', function (event) {
+  if (event.target.nodeName !== 'BUTTON') return;
+  const day = event.target.textContent;
+  populateSchedule(day.toLowerCase());
+  $changeDay.textContent = day;
+});
+
+/* setup a blank table with (num) rows */
+function blankSchedule(num) {
+  for (let i = 0; i < num; i++) {
+    const newRow = document.createElement('tr');
+    const col1 = document.createElement('td');
+    const col2 = document.createElement('td');
+    newRow.appendChild(col1);
+    newRow.appendChild(col2);
+    $scheduleBody.appendChild(newRow);
+  }
+}
+
+/* populate table with entries */
+/*
+Object.keys(objectName) to get array of keys of an object.
+Object.tentries(objectName) to get array of key-value pairs
+*/
+function populateSchedule(day) {
+  while ($scheduleBody.firstChild) {
+    $scheduleBody.removeChild($scheduleBody.firstChild);
+  }
+  const entryKeys = Object.entries(weeklyEntries[day]);
+  let morning = [];
+  let afternoon = [];
+  entryKeys.forEach(entry => {
+    if (/AM/.test(entry[0])) {
+      morning.push(entry);
+    } else {
+      afternoon.push(entry);
+    }
+  });
+  morning = compareTime(morning);
+  afternoon = compareTime(afternoon);
+  const fullSchedule = morning.concat(afternoon);
+  let addRows = fullSchedule.length;
+  if (addRows < 8) {
+    addRows = 8;
+  }
+  blankSchedule(addRows);
+  for (let i = 0; i < fullSchedule.length; i++) {
+    const $scheduleBodyNodes = $scheduleBody.querySelectorAll('tr');
+    const dataNodes = ($scheduleBodyNodes[i].children);
+    dataNodes[0].textContent = fullSchedule[i][0];
+    dataNodes[1].textContent = fullSchedule[i][1];
+  }
+}
+
+/* function for sorting an array of entry times keeping 12:00 as first entry
+sort format from MDN https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort:
+
+let numbers = [4, 2, 5, 1, 3];
+numbers.sort((a, b) => a - b);
+console.log(numbers);
+returns [1, 2, 3, 4, 5]
+
+assume timeArr format array of an array of key-value pairs:
+[[12:00 AM, description], [1:00 AM, description], [2:00 AM, description]]
+*/
+function compareTime(timeArr) {
+  return timeArr.sort((a, b) => {
+    let intA = parseInt(a[0]);
+    let intB = parseInt(b[0]);
+    if (intA === 12) {
+      intA = 0;
+    }
+    if (intB === 12) {
+      intB = 0;
+    }
+    return intA - intB;
+  });
+}
+
+/* example table setup reference */
+/* <tbody id="schedule-body" class="monday">
+          <tr>
+            <td>
+              Test time 10:00 AM
+            </td>
+            <td>
+              Test entry do work
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Test time 11:00 AM
+            </td>
+            <td>
+              Test entry do work
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Test time 12:00 PM
+            </td>
+            <td>
+              Test entry do work
+            </td>
+          </tr>
+        </tbody> */

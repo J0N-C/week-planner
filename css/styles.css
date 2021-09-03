@@ -5,7 +5,8 @@
 }
 
 h1,
-h2 {
+h2,
+h3 {
   text-align: center;
 }
 
@@ -27,6 +28,36 @@ textarea {
   height: 8rem;
 }
 
+table {
+  border-collapse: collapse;
+  margin: auto;
+  width: 85%;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 2px;
+}
+
+th {
+  font-weight: 600;
+  text-align: start;
+  background-color: lightgray;
+}
+
+th,
+td {
+  height: 2rem;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+td:nth-child(1) {
+  width: 25%;
+}
+
 button {
   background-color: white;
   border: 1px solid black;
@@ -43,9 +74,38 @@ button:active {
   background-color: rgb(241, 241, 241);
 }
 
+.entry-box button {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.space-ev {
+  justify-content: space-evenly;
+}
+
+#days > button {
+  box-shadow: none;
+  margin: 0.25rem;
+  font-size: 120%;
+  width: 7rem;
+  height: 6rem;
+}
+
+#days > button:hover {
+  background-color: lightgray;
+}
+
+#days > button:active {
+  background-color: rgb(241, 241, 241);
+}
+
+#days div h3 {
+  margin: auto;
+}
+
 #add-entry-button {
   margin: auto;
-  margin-top: 12rem;
+  margin-top: 2rem;
   font-size: 100%;
   padding: 0.5rem 4rem;
 }
@@ -74,11 +134,6 @@ button:active {
 
 .textarea-cont {
   padding: 1rem 0;
-}
-
-.entry-box button {
-  margin-right: 0;
-  margin-left: auto;
 }
 
 @media screen and (min-width: 768px) {
