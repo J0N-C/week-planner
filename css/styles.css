@@ -153,6 +153,14 @@ button:active {
   color: white;
   background-color: #366cd1;
   padding: 0 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.delete-button {
+  color: white;
+  background-color: #f14545;
+  padding: 0 1.5rem;
+  margin-right: 0.5rem;
 }
 
 @media screen and (min-width: 768px) {

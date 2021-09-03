@@ -72,6 +72,7 @@ function blankSchedule(num) {
     const col1 = document.createElement('td');
     const col2 = document.createElement('td');
     const col3 = document.createElement('td');
+    col3.className = 'center-buttons';
     newRow.appendChild(col1);
     newRow.appendChild(col2);
     newRow.appendChild(col3);
@@ -81,9 +82,9 @@ function blankSchedule(num) {
 
 /* populate table with entries */
 /*
-First removes all previous table data rows then sets up new one
+First removes all previous table data rows then sets up new one.
 Object.keys(objectName) to get array of keys of an object.
-Object.tentries(objectName) to get array of key-value pairs
+Object.entries(objectName) to get array of key-value pairs
 */
 function populateSchedule(day) {
   while ($scheduleBody.firstChild) {
@@ -141,23 +142,29 @@ function compareTime(timeArr) {
   });
 }
 
-/* add udpate button to entries */
+/* add udpate button only to entries, onto 3rd column */
 function addEditButton(node) {
   const editButton = document.createElement('button');
   editButton.textContent = 'Update';
-  editButton.className = 'button edit-button center-buttons';
+  editButton.className = 'button edit-button';
   node.appendChild(editButton);
+  const deleteButton = document.createElement('button');
+  deleteButton.textContent = 'Delete';
+  deleteButton.className = 'button delete-button';
+  node.appendChild(deleteButton);
 }
 
-/* opens update entry popup */
+/* opens update entry or delete entry popup */
 $scheduleBody.addEventListener('click', function (event) {
   if (event.target.nodeName !== 'BUTTON') return;
-  const childData = event.target.closest('tr').children;
-  $addEntryBox.className = '';
-  $addEntryBox.querySelector('h2').textContent = 'Edit Entry';
-  $entryForm.day.value = $scheduleBody.getAttribute('data-day');
-  $entryForm.hour.value = childData[0].textContent;
-  $entryForm.entry.value = childData[1].textContent;
+  if (event.target.classList.contains('edit-button')) {
+    const childData = event.target.closest('tr').children;
+    $addEntryBox.className = '';
+    $addEntryBox.querySelector('h2').textContent = 'Edit Entry';
+    $entryForm.day.value = $scheduleBody.getAttribute('data-day');
+    $entryForm.hour.value = childData[0].textContent;
+    $entryForm.entry.value = childData[1].textContent;
+  }
 });
 
 /* example table setup reference */
