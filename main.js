@@ -38,6 +38,13 @@ $addEntryButton.addEventListener('click', function (event) {
   $entryForm.reset();
 });
 
+/* close popup for new entry if click outside box */
+$addEntryBox.addEventListener('click', function (event) {
+  if (event.target.id === 'add-entry') {
+    $addEntryBox.className = 'hidden';
+  }
+});
+
 /* submit new entry and refresh schedule for day entered */
 $entryForm.addEventListener('submit', function (event) {
   event.preventDefault();
@@ -51,9 +58,10 @@ $entryForm.addEventListener('submit', function (event) {
 /* change schedule day */
 $scheduleDay.addEventListener('click', function (event) {
   if (event.target.nodeName !== 'BUTTON') return;
-  const day = event.target.textContent;
-  populateSchedule(day.toLowerCase());
-  $changeDay.textContent = day;
+  const day = event.target.getAttribute('data-day');
+  populateSchedule(day);
+  $scheduleBody.setAttribute('data-day', day.toLowerCase());
+  $changeDay.textContent = day[0].toUpperCase() + day.slice[1];
 });
 
 /* setup a blank table with (num) rows */
@@ -131,12 +139,22 @@ function compareTime(timeArr) {
   });
 }
 
+/* add udpate button to entries */
 function addEditButton(node) {
   const editButton = document.createElement('button');
   editButton.textContent = 'Update';
   editButton.className = 'button edit-button center-buttons';
   node.appendChild(editButton);
 }
+
+$scheduleBody.addEventListener('click', function (event) {
+  if (event.target.nodeName !== 'BUTTON') return;
+  const childData = event.target.closest('tr').children;
+  $addEntryBox.className = '';
+  $entryForm.day.value = $scheduleBody.getAttribute('data-day');
+  $entryForm.hour.value = childData[0].textContent;
+  $entryForm.entry.value = childData[1].textContent;
+});
 
 /* example table setup reference */
 /* <tbody id="schedule-body" class="monday">
