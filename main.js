@@ -62,8 +62,10 @@ function blankSchedule(num) {
     const newRow = document.createElement('tr');
     const col1 = document.createElement('td');
     const col2 = document.createElement('td');
+    const col3 = document.createElement('td');
     newRow.appendChild(col1);
     newRow.appendChild(col2);
+    newRow.appendChild(col3);
     $scheduleBody.appendChild(newRow);
   }
 }
@@ -100,6 +102,7 @@ function populateSchedule(day) {
     const dataNodes = ($scheduleBodyNodes[i].children);
     dataNodes[0].textContent = fullSchedule[i][0];
     dataNodes[1].textContent = fullSchedule[i][1];
+    addEditButton(dataNodes[2]);
   }
 }
 
@@ -126,6 +129,13 @@ function compareTime(timeArr) {
     }
     return intA - intB;
   });
+}
+
+function addEditButton(node) {
+  const editButton = document.createElement('button');
+  editButton.textContent = 'Update';
+  editButton.className = 'button, edit-button';
+  node.appendChild(editButton);
 }
 
 /* example table setup reference */

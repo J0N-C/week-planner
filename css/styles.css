@@ -46,7 +46,6 @@ th {
 th,
 td {
   height: 2rem;
-  border-right: 1px solid black;
   border-left: 1px solid black;
 }
 
@@ -56,6 +55,12 @@ tbody tr:nth-child(odd) {
 
 td:nth-child(1) {
   width: 25%;
+}
+
+td:nth-child(3),
+th:nth-child(3) {
+  width: 20%;
+  border-left: none;
 }
 
 button {
