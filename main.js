@@ -35,17 +35,18 @@ populateSchedule('monday');
 /* reveal new entry popup */
 $addEntryButton.addEventListener('click', function (event) {
   $addEntryBox.className = '';
+  $addEntryBox.querySelector('h2').textContent = 'Add Entry';
   $entryForm.reset();
 });
 
 /* close popup for new entry if click outside box */
-$addEntryBox.addEventListener('click', function (event) {
+$addEntryBox.addEventListener('mousedown', function (event) {
   if (event.target.id === 'add-entry') {
     $addEntryBox.className = 'hidden';
   }
 });
 
-/* submit new entry and refresh schedule for day entered */
+/* submit entry, add entry to data list, and refresh schedule for day entered */
 $entryForm.addEventListener('submit', function (event) {
   event.preventDefault();
   const dayOfW = $entryForm.day.value;
@@ -61,10 +62,10 @@ $scheduleDay.addEventListener('click', function (event) {
   const day = event.target.getAttribute('data-day');
   populateSchedule(day);
   $scheduleBody.setAttribute('data-day', day.toLowerCase());
-  $changeDay.textContent = day[0].toUpperCase() + day.slice[1];
+  $changeDay.textContent = day[0].toUpperCase() + day.slice(1);
 });
 
-/* setup a blank table with (num) rows */
+/* for setup of a blank table with (num) rows */
 function blankSchedule(num) {
   for (let i = 0; i < num; i++) {
     const newRow = document.createElement('tr');
@@ -80,6 +81,7 @@ function blankSchedule(num) {
 
 /* populate table with entries */
 /*
+First removes all previous table data rows then sets up new one
 Object.keys(objectName) to get array of keys of an object.
 Object.tentries(objectName) to get array of key-value pairs
 */
@@ -147,10 +149,12 @@ function addEditButton(node) {
   node.appendChild(editButton);
 }
 
+/* opens update entry popup */
 $scheduleBody.addEventListener('click', function (event) {
   if (event.target.nodeName !== 'BUTTON') return;
   const childData = event.target.closest('tr').children;
   $addEntryBox.className = '';
+  $addEntryBox.querySelector('h2').textContent = 'Edit Entry';
   $entryForm.day.value = $scheduleBody.getAttribute('data-day');
   $entryForm.hour.value = childData[0].textContent;
   $entryForm.entry.value = childData[1].textContent;

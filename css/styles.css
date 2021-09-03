@@ -31,6 +31,7 @@ textarea {
 table {
   border-collapse: collapse;
   margin: auto;
+  margin-bottom: 2rem;
   width: 85%;
   background-color: white;
   border: 1px solid black;
@@ -45,6 +46,7 @@ th {
 
 th,
 td {
+  padding-left: 0.25rem;
   height: 2rem;
   border-left: 1px solid black;
 }
