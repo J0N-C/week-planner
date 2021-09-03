@@ -35,10 +35,18 @@ populateSchedule('monday');
 /* reveal new entry popup */
 $addEntryButton.addEventListener('click', function (event) {
   $addEntryBox.className = '';
+  $addEntryBox.querySelector('h2').textContent = 'Add Entry';
   $entryForm.reset();
 });
 
-/* submit new entry and refresh schedule for day entered */
+/* close popup for new entry if click outside box */
+$addEntryBox.addEventListener('mousedown', function (event) {
+  if (event.target.id === 'add-entry') {
+    $addEntryBox.className = 'hidden';
+  }
+});
+
+/* submit entry, add entry to data list, and refresh schedule for day entered */
 $entryForm.addEventListener('submit', function (event) {
   event.preventDefault();
   const dayOfW = $entryForm.day.value;
@@ -51,25 +59,29 @@ $entryForm.addEventListener('submit', function (event) {
 /* change schedule day */
 $scheduleDay.addEventListener('click', function (event) {
   if (event.target.nodeName !== 'BUTTON') return;
-  const day = event.target.textContent;
-  populateSchedule(day.toLowerCase());
-  $changeDay.textContent = day;
+  const day = event.target.getAttribute('data-day');
+  populateSchedule(day);
+  $scheduleBody.setAttribute('data-day', day.toLowerCase());
+  $changeDay.textContent = day[0].toUpperCase() + day.slice(1);
 });
 
-/* setup a blank table with (num) rows */
+/* for setup of a blank table with (num) rows */
 function blankSchedule(num) {
   for (let i = 0; i < num; i++) {
     const newRow = document.createElement('tr');
     const col1 = document.createElement('td');
     const col2 = document.createElement('td');
+    const col3 = document.createElement('td');
     newRow.appendChild(col1);
     newRow.appendChild(col2);
+    newRow.appendChild(col3);
     $scheduleBody.appendChild(newRow);
   }
 }
 
 /* populate table with entries */
 /*
+First removes all previous table data rows then sets up new one
 Object.keys(objectName) to get array of keys of an object.
 Object.tentries(objectName) to get array of key-value pairs
 */
@@ -100,6 +112,7 @@ function populateSchedule(day) {
     const dataNodes = ($scheduleBodyNodes[i].children);
     dataNodes[0].textContent = fullSchedule[i][0];
     dataNodes[1].textContent = fullSchedule[i][1];
+    addEditButton(dataNodes[2]);
   }
 }
 
@@ -127,6 +140,25 @@ function compareTime(timeArr) {
     return intA - intB;
   });
 }
+
+/* add udpate button to entries */
+function addEditButton(node) {
+  const editButton = document.createElement('button');
+  editButton.textContent = 'Update';
+  editButton.className = 'button edit-button center-buttons';
+  node.appendChild(editButton);
+}
+
+/* opens update entry popup */
+$scheduleBody.addEventListener('click', function (event) {
+  if (event.target.nodeName !== 'BUTTON') return;
+  const childData = event.target.closest('tr').children;
+  $addEntryBox.className = '';
+  $addEntryBox.querySelector('h2').textContent = 'Edit Entry';
+  $entryForm.day.value = $scheduleBody.getAttribute('data-day');
+  $entryForm.hour.value = childData[0].textContent;
+  $entryForm.entry.value = childData[1].textContent;
+});
 
 /* example table setup reference */
 /* <tbody id="schedule-body" class="monday">

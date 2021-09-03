@@ -31,6 +31,7 @@ textarea {
 table {
   border-collapse: collapse;
   margin: auto;
+  margin-bottom: 2rem;
   width: 85%;
   background-color: white;
   border: 1px solid black;
@@ -45,8 +46,8 @@ th {
 
 th,
 td {
+  padding-left: 0.25rem;
   height: 2rem;
-  border-right: 1px solid black;
   border-left: 1px solid black;
 }
 
@@ -58,6 +59,12 @@ td:nth-child(1) {
   width: 25%;
 }
 
+td:nth-child(3),
+th:nth-child(3) {
+  width: 20%;
+  border-left: none;
+}
+
 button {
   background-color: white;
   border: 1px solid black;
@@ -67,6 +74,7 @@ button {
 }
 
 button:hover {
+  color: black;
   background-color: rgb(149, 188, 247);
 }
 
@@ -134,6 +142,17 @@ button:active {
 
 .textarea-cont {
   padding: 1rem 0;
+}
+
+.center-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.edit-button {
+  color: white;
+  background-color: #366cd1;
+  padding: 0 1.5rem;
 }
 
 @media screen and (min-width: 768px) {
