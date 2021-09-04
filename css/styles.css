@@ -147,7 +147,7 @@ button:active {
 }
 
 #delete-entry-box {
-  padding: 1rem 12rem;
+  padding: 1rem 2rem;
 }
 
 #delete-entry-box p {
@@ -156,6 +156,10 @@ button:active {
 
 .textarea-cont {
   padding: 1rem 0;
+}
+
+.txt-al-center {
+  text-align: center;
 }
 
 .center-buttons {
@@ -180,5 +184,9 @@ button:active {
 @media screen and (min-width: 768px) {
   .entry-box {
     width: 50%;
+  }
+
+  #delete-entry-box {
+    padding: 1rem 18rem;
   }
 }

@@ -29,6 +29,8 @@ const $scheduleDay = document.querySelector('#days');
 const $scheduleBody = document.querySelector('#schedule-body');
 const $changeDay = document.querySelector('#change-day');
 const $deleteEntryBox = document.querySelector('#delete-entry-box');
+const $cancelDelete = document.querySelector('#cancel-delete');
+const $confirmDelete = document.querySelector('#delete');
 
 /* default schedule to monday */
 populateSchedule('monday');
@@ -171,8 +173,20 @@ $scheduleBody.addEventListener('click', function (event) {
   }
   if (event.target.classList.contains('delete-button')) {
     $deleteEntryBox.className = '';
+    const deleteTargetDay = $scheduleBody.getAttribute('data-day');
+    const deleteTargetHour = event.target.closest('tr').children[0].textContent;
+    $cancelDelete.addEventListener('click', function (event) {
+      $deleteEntryBox.className = 'hidden';
+    });
+    $confirmDelete.addEventListener('click', function (event) {
+      delete weeklyEntries[deleteTargetDay][deleteTargetHour];
+      populateSchedule(deleteTargetDay);
+      $deleteEntryBox.className = 'hidden';
+    });
   }
 });
+
+/* cancel or confirm delete buttons */
 
 /* example table setup reference */
 /* <tbody id="schedule-body" class="monday">
