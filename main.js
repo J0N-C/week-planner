@@ -11,17 +11,18 @@ var weeklyEntries = {
   saturday: {},
   sunday: {}
 };
-
+/* save data to localstorage on close */
 window.addEventListener('beforeunload', function (event) {
   var weeklyEntriesJSON = JSON.stringify(weeklyEntries);
   localStorage.setItem('weekly-data', weeklyEntriesJSON);
 });
-
+/* load data on new page */
 var previousEntries = localStorage.getItem('weekly-data');
 if (previousEntries !== null) {
   weeklyEntries = JSON.parse(previousEntries);
 }
 
+/* variable declarations */
 const $addEntryButton = document.querySelector('#add-entry-button');
 const $addEntryBox = document.querySelector('#add-entry');
 const $entryForm = document.querySelector('#entry-form');
@@ -32,17 +33,17 @@ const $deleteEntryBox = document.querySelector('#delete-entry-box');
 const $cancelDelete = document.querySelector('#cancel-delete');
 const $confirmDelete = document.querySelector('#delete');
 
-/* default schedule to monday */
+/* default schedule to monday on new page/refresh */
 populateSchedule('monday');
 
-/* reveal new entry popup */
+/* reveal new entry popup modal */
 $addEntryButton.addEventListener('click', function (event) {
   $addEntryBox.className = '';
   $addEntryBox.querySelector('h2').textContent = 'Add Entry';
   $entryForm.reset();
 });
 
-/* close popup for new or delete entry, if click outside box */
+/* close popup for new or delete entry, if clicked outside modal box */
 window.addEventListener('mousedown', function (event) {
   if (event.target.id === 'add-entry') {
     $addEntryBox.className = 'hidden';
@@ -62,7 +63,7 @@ $entryForm.addEventListener('submit', function (event) {
   populateSchedule(dayOfW);
 });
 
-/* change schedule day */
+/* change schedule day displayed */
 $scheduleDay.addEventListener('click', function (event) {
   if (event.target.nodeName !== 'BUTTON') return;
   const day = event.target.getAttribute('data-day');
@@ -71,7 +72,7 @@ $scheduleDay.addEventListener('click', function (event) {
   $changeDay.textContent = day[0].toUpperCase() + day.slice(1);
 });
 
-/* for setup of a blank table with (num) rows */
+/* for setup of a blank table with (num) rows, 3 columnns: time, text, edit/delete buttons */
 function blankSchedule(num) {
   for (let i = 0; i < num; i++) {
     const newRow = document.createElement('tr');
@@ -86,16 +87,17 @@ function blankSchedule(num) {
   }
 }
 
-/* populate table with entries */
+/* populate table with entry time, description, editing buttons */
 /*
-First removes all previous table data rows then sets up new one.
 Object.keys(objectName) to get array of keys of an object.
 Object.entries(objectName) to get array of key-value pairs
 */
 function populateSchedule(day) {
+  /* loop to delete all previous nodes */
   while ($scheduleBody.firstChild) {
     $scheduleBody.removeChild($scheduleBody.firstChild);
   }
+  /* split times into AM/PM, then sort by descending and concat */
   const entryKeys = Object.entries(weeklyEntries[day]);
   let morning = [];
   let afternoon = [];
@@ -109,6 +111,7 @@ function populateSchedule(day) {
   morning = compareTime(morning);
   afternoon = compareTime(afternoon);
   const fullSchedule = morning.concat(afternoon);
+  /* Add number of rows to table as needed and populate, min. 8 rows */
   let addRows = fullSchedule.length;
   if (addRows < 8) {
     addRows = 8;
@@ -131,7 +134,7 @@ numbers.sort((a, b) => a - b);
 console.log(numbers);
 returns [1, 2, 3, 4, 5]
 
-assume timeArr format array of an array of key-value pairs:
+assume timeArr format array in array:
 [[12:00 AM, description], [1:00 AM, description], [2:00 AM, description]]
 */
 function compareTime(timeArr) {
@@ -148,7 +151,7 @@ function compareTime(timeArr) {
   });
 }
 
-/* add udpate button only to entries, onto 3rd column */
+/* add udpate and delete buttons only to entries, onto specified node */
 function addEditButton(node) {
   const editButton = document.createElement('button');
   editButton.textContent = 'Update';
@@ -162,7 +165,9 @@ function addEditButton(node) {
 
 /* opens update entry or delete entry popup */
 $scheduleBody.addEventListener('click', function (event) {
+  /* if user did not click button, do nothing */
   if (event.target.nodeName !== 'BUTTON') return;
+  /* if update is clicked, open pre-populated new entry box */
   if (event.target.classList.contains('edit-button')) {
     const childData = event.target.closest('tr').children;
     $addEntryBox.className = '';
@@ -171,13 +176,16 @@ $scheduleBody.addEventListener('click', function (event) {
     $entryForm.hour.value = childData[0].textContent;
     $entryForm.entry.value = childData[1].textContent;
   }
+  /* if delete is clicked, open confirmation */
   if (event.target.classList.contains('delete-button')) {
     $deleteEntryBox.className = '';
     const deleteTargetDay = $scheduleBody.getAttribute('data-day');
     const deleteTargetHour = event.target.closest('tr').children[0].textContent;
+    /* cancel delete, close confirmation */
     $cancelDelete.addEventListener('click', function (event) {
       $deleteEntryBox.className = 'hidden';
     });
+    /* confirm delete, remove property from entries object, repopulate table, close confirmation */
     $confirmDelete.addEventListener('click', function (event) {
       delete weeklyEntries[deleteTargetDay][deleteTargetHour];
       populateSchedule(deleteTargetDay);
@@ -185,8 +193,6 @@ $scheduleBody.addEventListener('click', function (event) {
     });
   }
 });
-
-/* cancel or confirm delete buttons */
 
 /* example table setup reference */
 /* <tbody id="schedule-body" class="monday">
