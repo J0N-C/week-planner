@@ -65,8 +65,7 @@ $entryForm.addEventListener('submit', function (event) {
 
 /* change schedule day displayed */
 $scheduleDay.addEventListener('click', function (event) {
-  if (event.target.nodeName !== 'BUTTON') return;
-  const day = event.target.getAttribute('data-day');
+  const day = event.target.closest('div').getAttribute('data-day');
   populateSchedule(day);
   $scheduleBody.setAttribute('data-day', day.toLowerCase());
   $changeDay.textContent = day[0].toUpperCase() + day.slice(1);
