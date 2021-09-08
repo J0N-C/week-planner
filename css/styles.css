@@ -87,6 +87,11 @@ button:active {
   margin-left: auto;
 }
 
+#delete-entry-box button {
+  margin: 0;
+  padding: 0.25rem 1rem;
+}
+
 .space-ev {
   justify-content: space-evenly;
 }
@@ -118,7 +123,8 @@ button:active {
   padding: 0.5rem 4rem;
 }
 
-#add-entry {
+#add-entry,
+#delete-entry-box {
   display: flex;
   background-color: rgba(53, 53, 53, 0.479);
   width: 100%;
@@ -140,8 +146,20 @@ button:active {
   margin: 0 1rem  1rem 0;
 }
 
+#delete-entry-box {
+  padding: 1rem 2rem;
+}
+
+#delete-entry-box p {
+  padding-bottom: 2rem;
+}
+
 .textarea-cont {
   padding: 1rem 0;
+}
+
+.txt-al-center {
+  text-align: center;
 }
 
 .center-buttons {
@@ -153,10 +171,22 @@ button:active {
   color: white;
   background-color: #366cd1;
   padding: 0 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.delete-button {
+  color: white;
+  background-color: #f14545;
+  padding: 0 1.5rem;
+  margin-right: 0.5rem;
 }
 
 @media screen and (min-width: 768px) {
   .entry-box {
     width: 50%;
+  }
+
+  #delete-entry-box {
+    padding: 1rem 18rem;
   }
 }
