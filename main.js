@@ -41,6 +41,7 @@ $addEntryButton.addEventListener('click', function (event) {
   $addEntryBox.className = '';
   $addEntryBox.querySelector('h2').textContent = 'Add Entry';
   $entryForm.reset();
+  $entryForm.day.value = $scheduleBody.getAttribute('data-day');
 });
 
 /* close popup for new or delete entry, if clicked outside modal box */
@@ -65,6 +66,10 @@ $entryForm.addEventListener('submit', function (event) {
 
 /* change schedule day displayed */
 $scheduleDay.addEventListener('click', function (event) {
+  for (let i = 0; i < 7; i++) {
+    $scheduleDay.children[i].className = '';
+  }
+  event.target.closest('div').className = 'active-day';
   const day = event.target.closest('div').getAttribute('data-day');
   populateSchedule(day);
   $scheduleBody.setAttribute('data-day', day.toLowerCase());
@@ -122,6 +127,11 @@ function populateSchedule(day) {
     dataNodes[0].textContent = fullSchedule[i][0];
     dataNodes[1].textContent = fullSchedule[i][1];
     addEditButton(dataNodes[2]);
+  }
+  /* Update entry counts on weekday tabs */
+  for (let d = 0; d < 7; d++) {
+    const day = $scheduleDay.children[d].getAttribute('data-day');
+    $scheduleDay.children[d].children[1].textContent = Object.keys(weeklyEntries[day]).length;
   }
 }
 
